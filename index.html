@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Tech Client Briefing — 12 March 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#0f1117; --surface:#1a1d27; --surface2:#21253a; --accent:#4f8ef7;
+      --accent2:#7eb3ff; --text:#e2e8f0; --muted:#8892a4; --legal:#f6c90e;
+      --border:#2d3348;
+    }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif; line-height:1.65; font-size:15px; }
+
+    header { background:linear-gradient(135deg,#0d1526 0%,#16213e 60%,#0f3460 100%); border-bottom:1px solid var(--border); padding:36px 40px 28px; position:relative; overflow:hidden; }
+    header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 70% 50%,rgba(79,142,247,0.12) 0%,transparent 70%); pointer-events:none; }
+    .header-inner { max-width:1100px; margin:0 auto; position:relative; }
+    .badge { display:inline-block; background:rgba(79,142,247,0.15); border:1px solid rgba(79,142,247,0.4); color:var(--accent2); font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 12px; border-radius:20px; margin-bottom:12px; }
+    header h1 { font-size:clamp(22px,4vw,36px); font-weight:700; color:#fff; letter-spacing:-0.5px; line-height:1.2; }
+    header h1 span { color:var(--accent2); }
+    .header-meta { margin-top:10px; font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+    .header-meta strong { color:var(--text); }
+    .dot { width:4px; height:4px; border-radius:50%; background:var(--border); display:inline-block; }
+
+    nav { background:rgba(15,17,23,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; padding:0 40px; }
+    .nav-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:4px; overflow-x:auto; scrollbar-width:none; padding:10px 0; }
+    .nav-inner::-webkit-scrollbar { display:none; }
+    nav a { display:flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px; font-size:13px; font-weight:500; color:var(--muted); text-decoration:none; white-space:nowrap; transition:background 0.15s,color 0.15s; border:1px solid transparent; }
+    nav a:hover { background:var(--surface); color:var(--text); border-color:var(--border); }
+    .nav-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+    main { max-width:1100px; margin:0 auto; padding:40px 40px 80px; }
+
+    .company-section { margin-bottom:56px; }
+    .company-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+    .company-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; flex-shrink:0; }
+    .company-title { flex:1; }
+    .company-title h2 { font-size:20px; font-weight:700; color:#fff; line-height:1.2; }
+    .company-title .count { font-size:12px; color:var(--muted); margin-top:2px; }
+    .severity-tag { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:6px; }
+    .sev-high   { background:rgba(239,68,68,0.15);  color:#f87171; border:1px solid rgba(239,68,68,0.3); }
+    .sev-medium { background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3); }
+    .sev-low    { background:rgba(34,197,94,0.15);  color:#4ade80; border:1px solid rgba(34,197,94,0.3); }
+
+    .news-grid { display:grid; gap:14px; }
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 22px; transition:border-color 0.15s,transform 0.1s; position:relative; overflow:hidden; }
+    .card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--card-accent,var(--accent)); border-radius:3px 0 0 3px; }
+    .card:hover { border-color:rgba(79,142,247,0.4); transform:translateY(-1px); }
+    .card-headline { font-size:15px; font-weight:600; color:#fff; line-height:1.4; margin-bottom:10px; }
+    .card-summary { font-size:14px; color:#b0bac8; line-height:1.65; margin-bottom:12px; }
+    .legal-note { background:rgba(246,201,14,0.07); border:1px solid rgba(246,201,14,0.2); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--legal); line-height:1.55; }
+    .legal-note::before { content:'⚖ Legal/Regulatory Note: '; font-weight:700; font-size:11px; letter-spacing:0.5px; text-transform:uppercase; }
+    .card-source { margin-top:10px; font-size:12px; color:var(--muted); }
+    .card-source span { color:var(--accent2); }
+
+    .highlights { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:40px; }
+    .highlights h3 { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent2); margin-bottom:14px; }
+    .highlight-list { display:flex; flex-direction:column; gap:8px; }
+    .hl-item { display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:var(--text); line-height:1.5; }
+    .hl-bullet { color:var(--legal); font-size:16px; line-height:1.3; flex-shrink:0; }
+    .hl-item a { color:var(--accent2); text-decoration:none; font-weight:600; }
+    .hl-item a:hover { text-decoration:underline; }
+
+    footer { border-top:1px solid var(--border); padding:24px 40px; text-align:center; font-size:12.5px; color:var(--muted); max-width:1100px; margin:0 auto; }
+    footer strong { color:var(--text); }
+    @media(max-width:680px){ header,nav,main,footer{padding-left:20px;padding-right:20px;} }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="badge">Confidential Client Intelligence</div>
+    <h1>Daily Tech Client <span>Briefing</span></h1>
+    <div class="header-meta">
+      <span>📅 <strong>12 March 2026</strong></span>
+      <span class="dot"></span>
+      <span>7 companies monitored</span>
+      <span class="dot"></span>
+      <span>21 stories</span>
+      <span class="dot"></span>
+      <span>Generated 12 March 2026 · 08:30 IST</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#google"><span class="nav-dot" style="background:#4285F4"></span>Google</a>
+    <a href="#amazon"><span class="nav-dot" style="background:#FF9900"></span>Amazon</a>
+    <a href="#aws"><span class="nav-dot" style="background:#F90"></span>AWS</a>
+    <a href="#roblox"><span class="nav-dot" style="background:#e52222"></span>Roblox</a>
+    <a href="#cloudflare"><span class="nav-dot" style="background:#F6821F"></span>Cloudflare</a>
+    <a href="#meta"><span class="nav-dot" style="background:#1877F2"></span>Meta</a>
+    <a href="#grindr"><span class="nav-dot" style="background:#FFCC00"></span>Grindr</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="highlights">
+    <h3>⚡ Top Stories at a Glance</h3>
+    <div class="highlight-list">
+      <div class="hl-item"><span class="hl-bullet">●</span><span><a href="#roblox">Roblox</a> faces multi-state child safety litigation — Nebraska AG joins 6 other states suing the platform for enabling child exploitation.</span></div>
+      <div class="hl-item"><span class="hl-bullet">●</span><span><a href="#meta">Meta</a> loses insurer defence for ~3,400 child harm lawsuits; Delaware court rules deliberate design decisions exclude accident coverage.</span></div>
+      <div class="hl-item"><span class="hl-bullet">●</span><span><a href="#aws">AWS</a> data centres in UAE and Bahrain struck by Iranian drones — critical infrastructure attack raises geopolitical and liability questions.</span></div>
+      <div class="hl-item"><span class="hl-bullet">●</span><span><a href="#cloudflare">Cloudflare</a> CEO Matthew Prince named suspect in Spanish criminal probe over football broadcasting IP rights.</span></div>
+      <div class="hl-item"><span class="hl-bullet">●</span><span><a href="#google">Google</a> antitrust remedies phase looms — potential forced divestiture of AdX exchange set for September 2026.</span></div>
+    </div>
+  </div>
+
+  <!-- GOOGLE -->
+  <section class="company-section" id="google">
+    <div class="company-header">
+      <div class="company-icon" style="background:rgba(66,133,244,0.15);color:#4285F4;">G</div>
+      <div class="company-title"><h2>Google</h2><div class="count">3 stories · Antitrust &amp; Regulatory</div></div>
+      <span class="severity-tag sev-high">High</span>
+    </div>
+    <div class="news-grid">
+      <div class="card" style="--card-accent:#4285F4">
+        <div class="card-headline">Google Proposes Android App Store Remedies to Resolve Antitrust Litigation</div>
+        <div class="card-summary">Google has revamped its Android app distribution system, proposing to share its Play Store catalogue with competitors and implement lower developer fees. The proposal aims to resolve US antitrust litigation and satisfy EU Digital Markets Act requirements — a significant structural concession to regulators on both sides of the Atlantic.</div>
+        <div class="legal-note">Critical antitrust remedy process following DoJ victory in monopolisation case. Outcome could set precedent for app store regulation globally, including India's Competition Commission proceedings against app stores.</div>
+        <div class="card-source">Source: <span>Bloomberg</span> · 4 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#4285F4">
+        <div class="card-headline">Fresh EU Antitrust Probe Launched into Google Search Ad Pricing</div>
+        <div class="card-summary">The European Commission has opened a new antitrust investigation into Google's search advertising pricing practices. The probe concerns whether Google is illegally manipulating the cost of advertising on its search engine, adding compounding regulatory pressure on its core revenue stream.</div>
+        <div class="legal-note">New EU investigation carries potential fines of up to 10% of global turnover under EU competition law. Ongoing EU scrutiny may influence parallel CCI proceedings in India.</div>
+        <div class="card-source">Source: <span>Bloomberg</span> · February 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#4285F4">
+        <div class="card-headline">Google Ad Tech Antitrust Case Enters Remedies Phase</div>
+        <div class="card-summary">A US federal court found Google violated antitrust law by monopolising digital advertising markets. The remedies phase is set for September 2026, with the DoJ seeking forced divestiture of Google's AdX advertising exchange — a core profit centre in its programmatic advertising business.</div>
+        <div class="legal-note">Potential forced divestiture would be the most consequential antitrust structural remedy imposed on a tech company in decades, fundamentally reshaping the digital advertising ecosystem globally.</div>
+        <div class="card-source">Source: <span>US Department of Justice</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMAZON -->
+  <section class="company-section" id="amazon">
+    <div class="company-header">
+      <div class="company-icon" style="background:rgba(255,153,0,0.15);color:#FF9900;">A</div>
+      <div class="company-title"><h2>Amazon</h2><div class="count">3 stories · Regulatory &amp; Platform Policy</div></div>
+      <span class="severity-tag sev-medium">Medium</span>
+    </div>
+    <div class="news-grid">
+      <div class="card" style="--card-accent:#FF9900">
+        <div class="card-headline">Amazon Publishes EU Digital Markets Act Compliance Report</div>
+        <div class="card-summary">Amazon published its latest DMA compliance documentation in March 2026, outlining steps taken to meet requirements applicable to it as a designated "gatekeeper" platform. The reporting obligation marks a significant milestone as EU regulators evaluate platform conduct.</div>
+        <div class="legal-note">Mandatory EU DMA compliance reporting; non-compliance risks fines up to 10% of global annual turnover or 20% for repeated infringements.</div>
+        <div class="card-source">Source: <span>MLex</span> · March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#FF9900">
+        <div class="card-headline">Amazon Updates Business Solutions Agreement with New AI Agent Policy</div>
+        <div class="card-summary">Effective 4 March 2026, Amazon updated its Business Solutions Agreement, introducing new restrictions on AI development and automated systems accessing Amazon services. The policy includes enhanced IP protections against reverse engineering and revised dispute resolution procedures.</div>
+        <div class="legal-note">Policy changes regulate AI agent interaction with the Amazon platform — relevant to clients operating AI-enabled commerce tools or automation systems on Amazon, with potential IP enforcement implications.</div>
+        <div class="card-source">Source: <span>Amazon Seller Central</span> · 4 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#FF9900">
+        <div class="card-headline">Amazon Ends Product Commingling and Updates Variation Policies</div>
+        <div class="card-summary">Amazon eliminated commingling practices across supply chains and decoupled reviews for product variations with material differences, effective February 2026. New eligibility criteria for brand representatives take effect 31 March 2026.</div>
+        <div class="legal-note">Platform policy changes with consumer protection and product authenticity implications. Sellers and brand owners will need to reassess compliance and review management practices under the new framework.</div>
+        <div class="card-source">Source: <span>Amazon Seller Central</span> · February 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AWS -->
+  <section class="company-section" id="aws">
+    <div class="company-header">
+      <div class="company-icon" style="background:rgba(255,153,0,0.15);color:#FF9900;font-size:11px;">AWS</div>
+      <div class="company-title"><h2>AWS (Amazon Web Services)</h2><div class="count">3 stories · Infrastructure &amp; Security</div></div>
+      <span class="severity-tag sev-high">High</span>
+    </div>
+    <div class="news-grid">
+      <div class="card" style="--card-accent:#FF9900">
+        <div class="card-headline">Iranian Drone Strikes Hit AWS Data Centres in UAE and Bahrain</div>
+        <div class="card-summary">Iranian drones struck two AWS facilities in the UAE and damaged a third data centre in Bahrain in early March 2026, causing structural damage, power disruption, and service outages across the Middle East region. Iranian state media claimed the attacks targeted AWS for alleged support of US military and intelligence operations.</div>
+        <div class="legal-note">Critical infrastructure incident with major force majeure, SLA liability, and business continuity implications for AWS cloud customers. Raises urgent questions around data sovereignty, insurance coverage for state-sponsored cyberphysical attacks, and cloud provider responsibility in conflict zones.</div>
+        <div class="card-source">Source: <span>CNBC, Fortune</span> · 4–9 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#FF9900">
+        <div class="card-headline">AWS Launches Amazon Connect Health: Purpose-Built AI Agents for Healthcare</div>
+        <div class="card-summary">AWS made Amazon Connect Health generally available, offering five AI agents for healthcare systems covering patient verification, appointment management, ambient documentation, and medical coding. All features are HIPAA-eligible, addressing compliance requirements for healthcare providers.</div>
+        <div class="legal-note">Healthcare AI product with HIPAA compliance implications. Relevant for clients in health tech deploying cloud-based AI — highlights the intersection of AI deployment and sector-specific data protection obligations in India and the EU.</div>
+        <div class="card-source">Source: <span>AWS News Blog</span> · 9 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#FF9900">
+        <div class="card-headline">AWS Transitions VPC Encryption Controls to Paid Feature</div>
+        <div class="card-summary">From 1 March 2026, AWS's VPC Encryption Controls moved from free preview to a paid service. Database Savings Plans also now extend to Amazon OpenSearch Service and Neptune Analytics, offering up to 35% cost savings on eligible usage.</div>
+        <div class="legal-note">Encryption policy changes may affect clients' regulatory compliance posture — particularly those subject to RBI, SEBI, IRDAI data security mandates in India, or GDPR encryption obligations in the EU.</div>
+        <div class="card-source">Source: <span>AWS News Blog</span> · March 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROBLOX -->
+  <section class="company-section" id="roblox">
+    <div class="company-header">
+      <div class="company-icon" style="background:rgba(229,34,34,0.15);color:#e52222;">Ro</div>
+      <div class="company-title"><h2>Roblox</h2><div class="count">3 stories · Child Safety Litigation</div></div>
+      <span class="severity-tag sev-high">High</span>
+    </div>
+    <div class="news-grid">
+      <div class="card" style="--card-accent:#e52222">
+        <div class="card-headline">Nebraska AG Sues Roblox for Enabling Child Exploitation</div>
+        <div class="card-summary">Nebraska Attorney General Mike Hilgers filed a major lawsuit against Roblox on 4 March 2026, alleging the platform knowingly exposes millions of children to sexual predators, violent content, and illegal activity. The suit claims Roblox deceives parents by marketing itself as "one of the safest online environments" while allowing direct adult-minor contact.</div>
+        <div class="legal-note">Joins lawsuits from Louisiana, Kentucky, Texas, Florida, Iowa, and Tennessee. Allegations of deceptive marketing and failure to protect minors could attract scrutiny under emerging US children's online safety legislation and influence similar proceedings internationally.</div>
+        <div class="card-source">Source: <span>Nebraska Attorney General</span> · 4 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#e52222">
+        <div class="card-headline">Multi-State Child Safety Litigation Escalates — 7 States Now Suing Roblox</div>
+        <div class="card-summary">Seven US states are now pursuing child safety lawsuits against Roblox. Louisiana held a court hearing on 6 March 2026 focusing on the platform's safety failures. The coordinated multi-state approach signals a broader regulatory convergence on children's online safety standards for gaming platforms.</div>
+        <div class="legal-note">Coordinated multi-state litigation is a well-established precursor to federal regulatory action. Combined with Congressional attention to children's online safety, this represents significant legislative and regulatory risk for similarly structured gaming platforms.</div>
+        <div class="card-source">Source: <span>KNOE</span> · 6 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#e52222">
+        <div class="card-headline">Roblox Implements Age Verification and Chat Safety Measures Under Litigation Pressure</div>
+        <div class="card-summary">In response to escalating litigation, Roblox introduced mandatory age-verification requirements and age-specific chat groups. The company's Chief Safety Officer publicly defended the platform's safety record while acknowledging the new measures.</div>
+        <div class="legal-note">Reactive compliance measures taken under litigation pressure may be presented by plaintiffs as evidence of prior inadequacy. The timing and scope of remedial action will be closely scrutinised for platform liability purposes.</div>
+        <div class="card-source">Source: <span>ABC News</span> · March 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOUDFLARE -->
+  <section class="company-section" id="cloudflare">
+    <div class="company-header">
+      <div class="company-icon" style="background:rgba(246,130,31,0.15);color:#F6821F;font-size:12px;">CF</div>
+      <div class="company-title"><h2>Cloudflare</h2><div class="count">3 stories · IP &amp; Cybersecurity</div></div>
+      <span class="severity-tag sev-high">High</span>
+    </div>
+    <div class="news-grid">
+      <div class="card" style="--card-accent:#F6821F">
+        <div class="card-headline">Cloudflare CEO Named Suspect in Spanish Football Broadcasting IP Case</div>
+        <div class="card-summary">On 4 March 2026, Cloudflare CEO Matthew Prince was named as a suspect in a Spanish criminal investigation into illegal football broadcasting rights. The probe alleges crimes against intellectual property and obstruction of justice. Prince is scheduled to appear before a Spanish court on 7 April 2026.</div>
+        <div class="legal-note">Criminal investigation involving a sitting CEO raises significant corporate governance, reputational, and operational risk. Allegations of IP infringement and obstruction — if substantiated — could affect Cloudflare's relationships with rights holders, content delivery clients, and regulators monitoring its role in piracy facilitation.</div>
+        <div class="card-source">Source: <span>Bloomberg</span> · 4 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#F6821F">
+        <div class="card-headline">Cloudflare 2026 Threat Report: Record 31.4 Tbps DDoS Attack Documented</div>
+        <div class="card-summary">Cloudflare's inaugural 2026 Threat Intelligence Report — based on 230 billion daily threat blocks — reveals the largest DDoS attack ever recorded: a 31.4 Tbps UDP flood by the Aisuru botnet in November 2025, six times larger than the prior record. Bots now account for 94% of all login attempts.</div>
+        <div class="legal-note">Critical threat intelligence for clients across financial services, telecom, and digital infrastructure. Mandatory breach notification timelines and sector-specific cybersecurity regulations (CERT-In in India, NIS2 in EU) should be evaluated against the escalating DDoS threat landscape.</div>
+        <div class="card-source">Source: <span>Cloudflare, Help Net Security</span> · 3 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#F6821F">
+        <div class="card-headline">North Korean State Actors Using AI Deepfakes to Infiltrate Western Companies</div>
+        <div class="card-summary">Cloudflare's threat report documents state-sponsored North Korean operatives obtaining employment at Western organisations using AI-generated deepfake profiles and US-based laptop farms. This novel threat vector combines AI identity fraud, credential compromise, and insider access to corporate systems.</div>
+        <div class="legal-note">Emerging AI-enabled insider threat with serious implications for employee vetting, identity verification standards, and corporate security obligations — relevant for technology companies, law firms, and financial institutions under data protection and national security-adjacent regulatory frameworks.</div>
+        <div class="card-source">Source: <span>Cloudflare</span> · 3 March 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- META -->
+  <section class="company-section" id="meta">
+    <div class="company-header">
+      <div class="company-icon" style="background:rgba(24,119,242,0.15);color:#1877F2;">M</div>
+      <div class="company-title"><h2>Meta (Facebook)</h2><div class="count">3 stories · Child Safety &amp; Crypto</div></div>
+      <span class="severity-tag sev-high">High</span>
+    </div>
+    <div class="news-grid">
+      <div class="card" style="--card-accent:#1877F2">
+        <div class="card-headline">Delaware Court: Meta's Insurers Have No Duty to Defend in Child Harm Litigation</div>
+        <div class="card-summary">A Delaware judge ruled on 3 March 2026 that Meta's insurers have no obligation to defend the company against approximately 3,400 lawsuits alleging Facebook and Instagram harm children. The court held that Meta's "deliberate platform design decisions" do not qualify as accidental events under its insurance policies.</div>
+        <div class="legal-note">Landmark insurance coverage ruling substantially increasing Meta's out-of-pocket liability exposure. The court's characterisation of platform design as "deliberate" materially strengthens plaintiffs' liability arguments and may accelerate settlement discussions across thousands of pending claims.</div>
+        <div class="card-source">Source: <span>Insurance Journal</span> · 3 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#1877F2">
+        <div class="card-headline">New Mexico Jurors Watch Zuckerberg Deposition in Meta Child Safety Bellwether Trial</div>
+        <div class="card-summary">Jurors in a New Mexico bellwether trial viewed a deposition of Meta CEO Mark Zuckerberg in early March 2026, examining what Facebook and Instagram executives knew from internal research about the platforms' negative impact on young users. The trial addresses alleged violations of state consumer protection laws.</div>
+        <div class="legal-note">Bellwether trial outcomes typically set the settlement value framework for consolidated mass litigation. Zuckerberg's testimony on internal research knowledge is pivotal — comparable in significance to the tobacco documents moment. The outcome will set the tone for thousands of pending claims.</div>
+        <div class="card-source">Source: <span>Insurance Journal, KSFR</span> · 5–6 March 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#1877F2">
+        <div class="card-headline">Meta Plans Stablecoin Payments Comeback in H2 2026</div>
+        <div class="card-summary">Meta is planning to reintroduce stablecoin-based payment infrastructure in H2 2026, buoyed by the more permissive US regulatory climate under the Trump administration. The company has issued RFPs to administer stablecoin payments and is investing in mining infrastructure at its Alberta facility.</div>
+        <div class="legal-note">Cryptocurrency payments re-entry under the US GENIUS Act framework. Meta's return to crypto payments could reshape the stablecoin regulatory landscape — including how regulators in India (RBI) and the EU (MiCA) respond to large platform-facilitated stablecoin transactions.</div>
+        <div class="card-source">Source: <span>CoinDesk</span> · 24 February 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRINDR -->
+  <section class="company-section" id="grindr">
+    <div class="company-header">
+      <div class="company-icon" style="background:rgba(255,204,0,0.15);color:#FFCC00;font-size:13px;">Gr</div>
+      <div class="company-title"><h2>Grindr</h2><div class="count">3 stories · Business Performance</div></div>
+      <span class="severity-tag sev-low">Low</span>
+    </div>
+    <div class="news-grid">
+      <div class="card" style="--card-accent:#FFCC00">
+        <div class="card-headline">Grindr Reports 28% Full-Year 2025 Revenue Growth, Raises 2026 Guidance</div>
+        <div class="card-summary">Grindr reported 28% year-on-year revenue growth in 2025 and raised 2026 guidance, projecting revenue exceeding $528 million and Adjusted EBITDA above $217 million. The Board authorised a $400 million increase to the share repurchase programme extended through March 2029.</div>
+        <div class="legal-note">Strong financial performance; no material regulatory developments this cycle. The repurchase programme may attract scrutiny if any undisclosed litigation risks exist, given the platform's handling of sensitive sexual orientation and location data.</div>
+        <div class="card-source">Source: <span>Business Wire</span> · 26 February 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#FFCC00">
+        <div class="card-headline">Grindr CEO Presents at Morgan Stanley TMT Conference</div>
+        <div class="card-summary">Grindr CEO George Arison presented at the Morgan Stanley Technology, Media &amp; Telecom Conference on 2 March 2026, with CFO John Moore at additional investor events. The company's active investor relations programme reflects stable operational posture and continuing capital markets engagement.</div>
+        <div class="legal-note">Routine investor relations; no material regulatory or legal developments disclosed. Active investor engagement following strong 2025 results indicates management confidence in the growth trajectory.</div>
+        <div class="card-source">Source: <span>Business Wire</span> · 25 February 2026</div>
+      </div>
+      <div class="card" style="--card-accent:#FFCC00">
+        <div class="card-headline">Grindr Service Outage — 2 March 2026</div>
+        <div class="card-summary">Grindr experienced a temporary service outage on 2 March 2026, with disruption reports peaking around 09:44 AM ET and affecting hundreds of users. The outage was brief and resolved without reported material impact.</div>
+        <div class="legal-note">Minor availability incident with no regulatory consequences reported. However, given Grindr's handling of sensitive personal data (sexual orientation, location), any significant or repeated outage would attract heightened scrutiny under GDPR, India's DPDPA, and comparable data protection frameworks.</div>
+        <div class="card-source">Source: <span>DesignTAXI Community</span> · 2 March 2026</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>Daily Tech Client Briefing</strong> — Prepared for Nik Narendran, Technology Law Practice<br>
+  <span style="margin-top:6px;display:inline-block;">Generated 12 March 2026 · Refreshed daily at 08:30 IST · For internal use only · <a href="https://niknaren.github.io/tech-briefing/" style="color:var(--accent2);text-decoration:none;">niknaren.github.io/tech-briefing</a></span>
+</footer>
+
+</body>
+</html>
